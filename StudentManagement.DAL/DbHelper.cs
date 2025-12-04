@@ -1,15 +1,16 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using MySql.Data.MySqlClient; // Cần cài NuGet: MySql.Data
 using System.Configuration;
 
 namespace StudentManagement.DAL
 {
     public static class DbHelper
     {
-        public static SqlConnection GetConnection()
+        public static MySqlConnection GetConnection()
         {
-            string connStr = ConfigurationManager
-                                .ConnectionStrings["StudentDb"].ConnectionString;
-            return new SqlConnection(connStr);
+            // Đảm bảo ConnectionString trong App.config đã đổi sang format của MySQL
+            // Ví dụ: Server=localhost;Database=StudentManagement;Uid=root;Pwd=...;
+            string connStr = ConfigurationManager.ConnectionStrings["StudentDb"].ConnectionString;
+            return new MySqlConnection(connStr);
         }
     }
 }
