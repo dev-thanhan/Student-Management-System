@@ -7,9 +7,9 @@ namespace StudentManagement.DAL.Implementations
     public class BangDiemDAL
     {
         // Lấy bảng điểm của một lớp học phần
-        public List<BangDiem> GetByCourse(string maLopHP)
+        public List<Diem> GetByCourse(string maLopHP)
         {
-            var list = new List<BangDiem>();
+            var list = new List<Diem>();
             using (var conn = DbHelper.GetConnection())
             {
                 conn.Open();
@@ -30,7 +30,7 @@ namespace StudentManagement.DAL.Implementations
         }
 
         // Cập nhật điểm (Thường giáo vụ sẽ nhập điểm chứ ít khi Insert từng dòng)
-        public bool UpdateScore(BangDiem diem)
+        public bool UpdateScore(Diem diem)
         {
             using (var conn = DbHelper.GetConnection())
             {
@@ -53,9 +53,9 @@ namespace StudentManagement.DAL.Implementations
             }
         }
 
-        private BangDiem MapReaderToGrade(MySqlDataReader reader)
+        private Diem MapReaderToGrade(MySqlDataReader reader)
         {
-            return new BangDiem
+            return new Diem
             {
                 MaSV = reader["MaSV"].ToString(),
                 MaLopHP = reader["MaLopHP"].ToString(),

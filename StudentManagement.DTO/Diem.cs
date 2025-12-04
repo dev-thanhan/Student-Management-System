@@ -4,7 +4,7 @@ using System.Text;
 
 namespace StudentManagement.DTO
 {
-    public class BangDiem
+    public class Diem
     {
         public string MaSV { get; set; } = string.Empty;
         public string MaLopHP { get; set; } = string.Empty;
