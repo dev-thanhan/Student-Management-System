@@ -1,19 +1,15 @@
-﻿
-namespace StudentManagement.DTO
+﻿namespace StudentManagement.DTO
 {
     public class SinhVien
     {
-        public string MaSV { get; set; } = string.Empty;
-        public string HoTen { get; set; } = string.Empty;
+        public string MaSV { get; set; } = "";
+        public string HoTen { get; set; } = "";
         public DateTime NgaySinh { get; set; } = DateTime.Now;
-
-        // True: Nam, False: Nữ
-        public bool GioiTinh { get; set; } = true;
-
-        public string DiaChi { get; set; } = string.Empty;
-        public string SoDienThoai { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public string MaLop { get; set; } = string.Empty;
+        public bool GioiTinh { get; set; } // True: Nam, False: Nữ
+        public string DiaChi { get; set; } = "";
+        public string SoDienThoai { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string MaLop { get; set; } = "";
 
         public StudentStatus TrangThai { get; set; } = StudentStatus.DangHoc;
     }

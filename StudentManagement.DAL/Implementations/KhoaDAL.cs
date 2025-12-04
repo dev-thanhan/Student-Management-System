@@ -32,6 +32,32 @@ namespace StudentManagement.DAL.Implementations
             return list;
         }
 
+        public Khoa GetById(string maKhoa)
+        {
+            Khoa k = null;
+            using (MySqlConnection conn = DbHelper.GetConnection())
+            {
+                string sql = "SELECT * FROM Khoa WHERE MaKhoa = @Id";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@Id", maKhoa);
+                conn.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        k = new Khoa
+                        {
+                            MaKhoa = reader["MaKhoa"].ToString(),
+                            TenKhoa = reader["TenKhoa"].ToString(),
+                            DienThoai = reader["DienThoai"].ToString(),
+                            Email = reader["Email"].ToString()
+                        };
+                    }
+                }
+            }
+            return k;
+        }
+
         public bool Insert(Khoa khoa)
         {
             using (MySqlConnection conn = DbHelper.GetConnection())
@@ -77,6 +103,22 @@ namespace StudentManagement.DAL.Implementations
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
+
+        public bool HasChildData(string maKhoa)
+        {
+            using (MySqlConnection conn = DbHelper.GetConnection())
+            {
+                // Kiểm tra trong bảng Nganh
+                string sql = "SELECT COUNT(*) FROM Nganh WHERE MaKhoa = @Id";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@Id", maKhoa);
+
+                conn.Open();
+                long count = Convert.ToInt64(cmd.ExecuteScalar());
+                return count > 0;
+            }
+        }
+
         private void AddParams(MySqlCommand cmd, Khoa khoa)
         {
             cmd.Parameters.AddWithValue("@Id", khoa.MaKhoa);

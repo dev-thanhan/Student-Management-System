@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using MySql.Data.MySqlClient; 
+﻿using MySql.Data.MySqlClient; 
 using StudentManagement.DTO;
 using StudentManagement.DAL.Interfaces;
 
@@ -124,6 +122,41 @@ namespace StudentManagement.DAL.Implementations
             return result;
         }
 
+        public List<SinhVien> GetByClass(string maLop)
+        {
+            var result = new List<SinhVien>();
+            using (MySqlConnection conn = DbHelper.GetConnection())
+            {
+                string sql = "SELECT * FROM SinhVien WHERE MaLop = @MaLop";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@MaLop", maLop);
+
+                conn.Open();
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        result.Add(GetStudentFromReader(reader));
+                    }
+                }
+            }
+            return result;
+        }
+
+        public bool IsIdExists(string maSV)
+        {
+            using (MySqlConnection conn = DbHelper.GetConnection())
+            {
+                string sql = "SELECT COUNT(*) FROM SinhVien WHERE MaSV = @MaSV";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@MaSV", maSV);
+
+                conn.Open();
+                int count = Convert.ToInt32(cmd.ExecuteScalar());
+                return count > 0;
+            }
+        }
+
         // --- Helper Methods ---
 
         private SinhVien GetStudentFromReader(MySqlDataReader reader)
@@ -150,12 +183,13 @@ namespace StudentManagement.DAL.Implementations
             };
         }
 
+
         private void AddParams(MySqlCommand cmd, SinhVien sv)
         {
             cmd.Parameters.AddWithValue("@MaSV", sv.MaSV);
             cmd.Parameters.AddWithValue("@HoTen", sv.HoTen);
             cmd.Parameters.AddWithValue("@NgaySinh", sv.NgaySinh);
-            cmd.Parameters.AddWithValue("@GioiTinh", sv.GioiTinh); // MySql driver tự map bool -> BIT
+            cmd.Parameters.AddWithValue("@GioiTinh", sv.GioiTinh);
             cmd.Parameters.AddWithValue("@DiaChi", sv.DiaChi);
             cmd.Parameters.AddWithValue("@SoDienThoai", sv.SoDienThoai);
             cmd.Parameters.AddWithValue("@Email", sv.Email);

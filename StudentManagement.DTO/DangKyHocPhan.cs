@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace StudentManagement.DTO
+﻿namespace StudentManagement.DTO
 {
     public class DangKyHocPhan
     {
-        public string MaSV { get; set; } = string.Empty;
-        public string MaLopHP { get; set; } = string.Empty;
+        public string MaSV { get; set; } = "";
+        public string MaLopHP { get; set; } = "";
         public DateTime NgayDangKy { get; set; } = DateTime.Now;
         public RegistrationStatus TrangThai { get; set; } = RegistrationStatus.DangKyMoi;
     }
