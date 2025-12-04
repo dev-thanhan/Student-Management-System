@@ -1,10 +1,11 @@
 ﻿using MySql.Data.MySqlClient;
 using StudentManagement.DTO;
 using System.Collections.Generic;
+using StudentManagement.DAL.Interfaces;
 
 namespace StudentManagement.DAL.Implementations
 {
-    public class KhoaDAL
+    public class KhoaDAL : IKhoaDAL
     {
         public List<Khoa> GetAll()
         {

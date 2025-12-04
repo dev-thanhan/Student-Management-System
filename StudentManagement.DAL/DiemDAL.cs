@@ -4,7 +4,7 @@ using StudentManagement.DTO;
 
 namespace StudentManagement.DAL.Implementations
 {
-    public class BangDiemDAL
+    public class DiemDAL
     {
         // Lấy bảng điểm của một lớp học phần
         public List<Diem> GetByCourse(string maLopHP)
