@@ -1,18 +1,38 @@
-﻿using MySql.Data.MySqlClient; 
+﻿using MySql.Data.MySqlClient;
 using StudentManagement.DTO;
 using StudentManagement.DAL.Interfaces;
+using System;
+using System.Collections.Generic;
 
 namespace StudentManagement.DAL.Implementations
 {
     public class SinhVienDAL : ISinhVienDAL
     {
+        // Khai báo câu lệnh SQL chuẩn để dùng chung cho GetAll, Search, GetById...
+        // Giúp code gọn hơn và đồng bộ dữ liệu Khoa, GPA ở mọi nơi
+        private const string SQL_SELECT_FULL = @"
+            SELECT 
+                sv.*, 
+                k.TenKhoa,
+                COALESCE(
+                    (SELECT SUM(d.DiemTongKet * mh.SoTinChi) / SUM(mh.SoTinChi)
+                     FROM Diem d
+                     JOIN LopHocPhan lhp ON d.MaLopHP = lhp.MaLopHP
+                     JOIN MonHoc mh ON lhp.MaMon = mh.MaMon
+                     WHERE d.MaSV = sv.MaSV), 0
+                ) AS GPA
+            FROM SinhVien sv
+            LEFT JOIN Lop l ON sv.MaLop = l.MaLop
+            LEFT JOIN Nganh n ON l.MaNganh = n.MaNganh
+            LEFT JOIN Khoa k ON n.MaKhoa = k.MaKhoa ";
+
         public List<SinhVien> GetAll()
         {
             var result = new List<SinhVien>();
             using (MySqlConnection conn = DbHelper.GetConnection())
             {
-                string sql = "SELECT * FROM SinhVien";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                // Sử dụng câu lệnh SQL đầy đủ đã khai báo ở trên
+                MySqlCommand cmd = new MySqlCommand(SQL_SELECT_FULL, conn);
 
                 conn.Open();
                 using (MySqlDataReader reader = cmd.ExecuteReader())
@@ -31,7 +51,8 @@ namespace StudentManagement.DAL.Implementations
             SinhVien sv = null;
             using (MySqlConnection conn = DbHelper.GetConnection())
             {
-                string sql = "SELECT * FROM SinhVien WHERE MaSV = @MaSV";
+                // Thêm điều kiện WHERE vào câu SQL đầy đủ
+                string sql = SQL_SELECT_FULL + " WHERE sv.MaSV = @MaSV";
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@MaSV", maSV);
 
@@ -45,6 +66,49 @@ namespace StudentManagement.DAL.Implementations
                 }
             }
             return sv;
+        }
+
+        public List<SinhVien> Search(string keyword)
+        {
+            var result = new List<SinhVien>();
+            using (MySqlConnection conn = DbHelper.GetConnection())
+            {
+                // Thêm điều kiện tìm kiếm
+                string sql = SQL_SELECT_FULL + " WHERE sv.HoTen LIKE @Keyword OR sv.MaSV LIKE @Keyword";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@Keyword", "%" + keyword + "%");
+
+                conn.Open();
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        result.Add(GetStudentFromReader(reader));
+                    }
+                }
+            }
+            return result;
+        }
+
+        public List<SinhVien> GetByClass(string maLop)
+        {
+            var result = new List<SinhVien>();
+            using (MySqlConnection conn = DbHelper.GetConnection())
+            {
+                string sql = SQL_SELECT_FULL + " WHERE sv.MaLop = @MaLop";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@MaLop", maLop);
+
+                conn.Open();
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        result.Add(GetStudentFromReader(reader));
+                    }
+                }
+            }
+            return result;
         }
 
         public bool Insert(SinhVien sv)
@@ -89,9 +153,6 @@ namespace StudentManagement.DAL.Implementations
         {
             using (MySqlConnection conn = DbHelper.GetConnection())
             {
-                // Lưu ý: Do có ràng buộc khóa ngoại (Foreign Key), 
-                // nếu SV đã đăng ký học phần hoặc có điểm, lệnh này có thể lỗi.
-                // Cần xử lý try-catch ở tầng BLL hoặc GUI.
                 string sql = "DELETE FROM SinhVien WHERE MaSV = @MaSV";
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@MaSV", maSV);
@@ -99,48 +160,6 @@ namespace StudentManagement.DAL.Implementations
                 conn.Open();
                 return cmd.ExecuteNonQuery() > 0;
             }
-        }
-
-        public List<SinhVien> Search(string keyword)
-        {
-            var result = new List<SinhVien>();
-            using (MySqlConnection conn = DbHelper.GetConnection())
-            {
-                string sql = "SELECT * FROM SinhVien WHERE HoTen LIKE @Keyword OR MaSV LIKE @Keyword";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@Keyword", "%" + keyword + "%");
-
-                conn.Open();
-                using (MySqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        result.Add(GetStudentFromReader(reader));
-                    }
-                }
-            }
-            return result;
-        }
-
-        public List<SinhVien> GetByClass(string maLop)
-        {
-            var result = new List<SinhVien>();
-            using (MySqlConnection conn = DbHelper.GetConnection())
-            {
-                string sql = "SELECT * FROM SinhVien WHERE MaLop = @MaLop";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@MaLop", maLop);
-
-                conn.Open();
-                using (MySqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        result.Add(GetStudentFromReader(reader));
-                    }
-                }
-            }
-            return result;
         }
 
         public bool IsIdExists(string maSV)
@@ -158,35 +177,40 @@ namespace StudentManagement.DAL.Implementations
         }
 
         // --- Helper Methods ---
-
+        // Đã sửa lại để map đúng các cột TenKhoa và GPA
         private SinhVien GetStudentFromReader(MySqlDataReader reader)
         {
-            return new SinhVien
+            var sv = new SinhVien
             {
                 MaSV = reader["MaSV"].ToString(),
                 HoTen = reader["HoTen"].ToString(),
-                // Kiểm tra null cho ngày sinh
                 NgaySinh = reader["NgaySinh"] != DBNull.Value ? Convert.ToDateTime(reader["NgaySinh"]) : DateTime.Now,
-
-                // MySQL BIT trả về bool hoặc ulong, Convert.ToBoolean là an toàn nhất
                 GioiTinh = reader["GioiTinh"] != DBNull.Value && Convert.ToBoolean(reader["GioiTinh"]),
-
                 DiaChi = reader["DiaChi"].ToString(),
                 SoDienThoai = reader["SoDienThoai"].ToString(),
                 Email = reader["Email"].ToString(),
                 MaLop = reader["MaLop"].ToString(),
-
-                MaKhoa = reader.GetSchemaTable().Select("ColumnName = 'MaKhoa'").Length > 0 && reader["MaKhoa"] != DBNull.Value
-                 ? reader["MaKhoa"].ToString()
-                 : "",
-
-                // Convert TINYINT (byte/int) sang Enum
                 TrangThai = reader["TrangThai"] != DBNull.Value
                             ? (StudentStatus)Convert.ToByte(reader["TrangThai"])
                             : StudentStatus.DangHoc
             };
-        }
 
+            // Kiểm tra và lấy TenKhoa (thay thế cho MaKhoa cũ)
+            // Cần kiểm tra cột tồn tại để tránh lỗi nếu câu query không có cột này
+            if (ColumnExists(reader, "TenKhoa"))
+            {
+                sv.TenKhoa = reader["TenKhoa"] != DBNull.Value ? reader["TenKhoa"].ToString() : "";
+            }
+
+            // Kiểm tra và lấy GPA
+            if (ColumnExists(reader, "GPA"))
+            {
+                sv.GPA = reader["GPA"] != DBNull.Value ? Convert.ToDecimal(reader["GPA"]) : 0;
+                sv.GPA = Math.Round(sv.GPA, 2); // Làm tròn 2 số lẻ
+            }
+
+            return sv;
+        }
 
         private void AddParams(MySqlCommand cmd, SinhVien sv)
         {
@@ -198,8 +222,20 @@ namespace StudentManagement.DAL.Implementations
             cmd.Parameters.AddWithValue("@SoDienThoai", sv.SoDienThoai);
             cmd.Parameters.AddWithValue("@Email", sv.Email);
             cmd.Parameters.AddWithValue("@MaLop", sv.MaLop);
-            // Enum sẽ được convert sang int/byte khi truyền vào parameter
             cmd.Parameters.AddWithValue("@TrangThai", sv.TrangThai);
+        }
+
+        // Hàm phụ để kiểm tra cột có tồn tại trong DataReader không
+        private bool ColumnExists(MySqlDataReader reader, string columnName)
+        {
+            for (int i = 0; i < reader.FieldCount; i++)
+            {
+                if (reader.GetName(i).Equals(columnName, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

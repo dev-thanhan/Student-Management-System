@@ -15,36 +15,41 @@ namespace StudentManagement.GUI
             InitializeComponent();
         }
 
+        // Xử lý lỗi hiển thị DataGridView (nếu có)
         private void dgvStudents_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
-            // Suppress the default DataGridView error dialog and show a friendly message
             e.ThrowException = false;
             e.Cancel = true;
-            // Optional: log or show minimal message
-            MessageBox.Show("Lỗi dữ liệu trong bảng. Vui lòng kiểm tra lại dữ liệu.", "Lỗi dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
+        // Hàm tải dữ liệu lên lưới
         public void LoadData()
         {
             try
             {
                 var list = _bll.GetAllStudents();
 
-                // Convert to display-friendly format
+                // Chuyển đổi sang danh sách hiển thị (thêm cột Khoa và GPA)
                 var displayList = new List<dynamic>();
                 foreach (var sv in list)
                 {
                     displayList.Add(new
                     {
-                        sv.MaSV,
-                        sv.HoTen,
-                        sv.NgaySinh,
-                        GioiTinh = sv.GioiTinh ? "Nam" : "Nữ",
-                        sv.DiaChi,
-                        sv.SoDienThoai,
-                        sv.Email,
-                        sv.MaLop,
-                        sv.TrangThai
+                        Mã_SV = sv.MaSV,
+                        Họ_Tên = sv.HoTen,
+                        Ngày_Sinh = sv.NgaySinh,
+                        Giới_Tính = sv.GioiTinh ? "Nam" : "Nữ",
+                        Địa_Chỉ = sv.DiaChi,
+                        SĐT = sv.SoDienThoai,
+                        Email = sv.Email,
+                        Lớp = sv.MaLop,
+
+                        // --- THÊM 2 CỘT MỚI Ở ĐÂY ---
+                        Khoa = sv.TenKhoa,
+                        GPA = sv.GPA,
+                        // ----------------------------
+
+                        Trạng_Thái = sv.TrangThai
                     });
                 }
 
@@ -56,6 +61,7 @@ namespace StudentManagement.GUI
             }
         }
 
+        // Sự kiện tìm kiếm
         private void btnSearch_Click(object sender, EventArgs e)
         {
             var kw = txtSearch.Text.Trim();
@@ -65,21 +71,27 @@ namespace StudentManagement.GUI
                 if (string.IsNullOrEmpty(kw)) list = _bll.GetAllStudents();
                 else list = _bll.Search(kw);
 
-                // Convert to display-friendly format
+                // Cũng phải cập nhật chỗ hiển thị tìm kiếm cho đồng bộ
                 var displayList = new List<dynamic>();
                 foreach (var sv in list)
                 {
                     displayList.Add(new
                     {
-                        sv.MaSV,
-                        sv.HoTen,
-                        sv.NgaySinh,
-                        GioiTinh = sv.GioiTinh ? "Nam" : "Nữ",
-                        sv.DiaChi,
-                        sv.SoDienThoai,
-                        sv.Email,
-                        sv.MaLop,
-                        sv.TrangThai
+                        Mã_SV = sv.MaSV,
+                        Họ_Tên = sv.HoTen,
+                        Ngày_Sinh = sv.NgaySinh,
+                        Giới_Tính = sv.GioiTinh ? "Nam" : "Nữ",
+                        Địa_Chỉ = sv.DiaChi,
+                        SĐT = sv.SoDienThoai,
+                        Email = sv.Email,
+                        Lớp = sv.MaLop,
+
+                        // --- THÊM 2 CỘT MỚI Ở ĐÂY ---
+                        Khoa = sv.TenKhoa,
+                        GPA = sv.GPA,
+                        // ----------------------------
+
+                        Trạng_Thái = sv.TrangThai
                     });
                 }
 
@@ -113,8 +125,9 @@ namespace StudentManagement.GUI
             // Kiểm tra xem có dòng nào được chọn không
             if (dgvStudents.CurrentRow == null) return;
 
-            // Lấy MaSV từ cột (Cell) thay vì ép kiểu DataBoundItem
-            string maSV = dgvStudents.CurrentRow.Cells["MaSV"].Value.ToString();
+            // Lưu ý: Cần lấy đúng tên cột (property name trong anonymous object ở trên)
+            // Vì ở trên mình đặt tên là "Mã_SV" nên ở đây phải lấy theo "Mã_SV"
+            string maSV = dgvStudents.CurrentRow.Cells["Mã_SV"].Value.ToString();
 
             // Gọi BLL để lấy thông tin sinh viên đầy đủ từ Database
             SinhVien sv = _bll.GetById(maSV);
@@ -138,9 +151,9 @@ namespace StudentManagement.GUI
         {
             if (dgvStudents.CurrentRow == null) return;
 
-            // Lấy MaSV và HoTen từ cột (Cell)
-            string maSV = dgvStudents.CurrentRow.Cells["MaSV"].Value.ToString();
-            string hoTen = dgvStudents.CurrentRow.Cells["HoTen"].Value.ToString();
+            // Lấy MaSV và HoTen từ cột tương ứng
+            string maSV = dgvStudents.CurrentRow.Cells["Mã_SV"].Value.ToString();
+            string hoTen = dgvStudents.CurrentRow.Cells["Họ_Tên"].Value.ToString();
 
             var confirm = MessageBox.Show($"Xóa sinh viên {maSV} - {hoTen}?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (confirm == DialogResult.Yes)

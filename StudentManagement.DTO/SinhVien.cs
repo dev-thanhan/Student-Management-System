@@ -11,7 +11,8 @@
         public string Email { get; set; } = "";
         public string MaLop { get; set; } = "";
 
-        public string MaKhoa { get; set; } = "";
+        public string TenKhoa { get; set; } = ""; // Để hiển thị tên khoa
+        public decimal GPA { get; set; } = 0;     // Để hiển thị điểm trung bình
 
         public StudentStatus TrangThai { get; set; } = StudentStatus.DangHoc;
     }
