@@ -1,29 +1,32 @@
-namespace StudentManagement.GUI
+﻿namespace StudentManagement.GUI
 {
     partial class LopMonForm
     {
         private System.ComponentModel.IContainer components = null;
 
-        private System.Windows.Forms.Panel headerPanel;
-        private System.Windows.Forms.Panel filterPanel;
-        private System.Windows.Forms.Panel buttonPanel;
-        private System.Windows.Forms.Panel gridPanel;
-        
-
-        private System.Windows.Forms.Label lblLop;
-        private System.Windows.Forms.Label lblMon;
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
+            {
                 components.Dispose();
-
+            }
             base.Dispose(disposing);
         }
 
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
         private void InitializeComponent()
         {
-           
+            this.components = new System.ComponentModel.Container();
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Text = "LopMonForm";
+            // ĐÃ XÓA DÒNG GÂY LỖI: this.Load += ... LopMonForm_Load_1
+        }
+
+        #endregion
     }
-}
 }

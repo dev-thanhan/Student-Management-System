@@ -2,44 +2,46 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using StudentManagement.BLL; 
-using StudentManagement.DTO; 
-using System.Linq; 
+using StudentManagement.BLL;
+using StudentManagement.DTO;
+using System.Linq;
 
 namespace StudentManagement.GUI
 {
     public partial class LopMonForm : Form
     {
+        // Khai báo các tầng xử lý nghiệp vụ
         private readonly LopBLL _lopBLL = new LopBLL();
-        private readonly MonHocBLL _monHocBLL = new MonHocBLL();
-        private readonly HocPhanBLL _hocPhanBLL = new HocPhanBLL(); 
+        private readonly SinhVienBLL _sinhVienBLL = new SinhVienBLL();
 
-        // Declare Controls
+        // Khai báo các Control giao diện
         ComboBox cboLop;
-        // Đã loại bỏ ComboBox cboMon
         DataGridView dgv;
         Button btnExport;
         Button btnImport;
 
         public LopMonForm()
         {
+            // Gọi hàm Designer (giờ đã sạch lỗi)
+            InitializeComponent();
+            // Gọi hàm tự tạo giao diện của chúng ta
             InitializeNewUI();
-            dgv.DataError += dgv_DataError; 
         }
 
+        // --- HÀM TẠO GIAO DIỆN (CODE TAY) ---
         private void InitializeNewUI()
         {
-            this.Text = "Quản lý Sinh viên theo Lớp"; // Đổi tên form
+            this.Text = "Quản lý Sinh viên theo Lớp";
             this.Size = new Size(1100, 650);
             this.StartPosition = FormStartPosition.CenterScreen;
             this.BackColor = Color.White;
             this.Font = new Font("Segoe UI", 10);
 
-            // ---------- PANEL TOP (SELECTORS) ----------
+            // 1. Panel trên cùng (Chứa ComboBox chọn lớp)
             Panel topPanel = new Panel()
             {
                 Dock = DockStyle.Top,
-                Height = 70, // Giảm chiều cao panel
+                Height = 60,
                 Padding = new Padding(10),
                 BackColor = Color.WhiteSmoke
             };
@@ -47,37 +49,39 @@ namespace StudentManagement.GUI
 
             Label lblLop = new Label()
             {
-                Text = "Lớp:",
+                Text = "Chọn Lớp:",
                 AutoSize = true,
-                Location = new Point(10, 10)
+                Location = new Point(20, 18)
             };
             topPanel.Controls.Add(lblLop);
 
             cboLop = new ComboBox()
             {
-                Location = new Point(60, 7),
-                Size = new Size(200, 28),
+                Location = new Point(100, 15),
+                Size = new Size(250, 28),
                 DropDownStyle = ComboBoxStyle.DropDownList
             };
+            // Gán sự kiện khi người dùng chọn lớp khác
             cboLop.SelectedIndexChanged += cboLop_SelectedIndexChanged;
             topPanel.Controls.Add(cboLop);
 
-            // Đã loại bỏ Label và ComboBox cho Môn học
-
-            // ---------- GRID VIEW ----------
+            // 2. Bảng dữ liệu (DataGridView)
             dgv = new DataGridView()
             {
                 Dock = DockStyle.Fill,
                 BackgroundColor = Color.White,
-                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill, 
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
                 BorderStyle = BorderStyle.Fixed3D,
                 AllowUserToAddRows = false,
-                ReadOnly = true
+                ReadOnly = true,
+                SelectionMode = DataGridViewSelectionMode.FullRowSelect
             };
-            dgv.CellFormatting += dgv_CellFormatting; 
+            // Gán sự kiện để định dạng hiển thị (Nam/Nữ,...)
+            dgv.CellFormatting += dgv_CellFormatting;
+            dgv.DataError += dgv_DataError;
             this.Controls.Add(dgv);
 
-            // ---------- BOTTOM TOOL BAR ----------
+            // 3. Panel dưới cùng (Chứa nút bấm)
             Panel bottomPanel = new Panel()
             {
                 Dock = DockStyle.Bottom,
@@ -91,7 +95,8 @@ namespace StudentManagement.GUI
             {
                 Text = "Xuất Excel",
                 Size = new Size(120, 35),
-                Location = new Point(10, 10)
+                Location = new Point(10, 10),
+                BackColor = Color.White
             };
             btnExport.Click += btnExportExcel_Click;
             bottomPanel.Controls.Add(btnExport);
@@ -100,34 +105,40 @@ namespace StudentManagement.GUI
             {
                 Text = "Nhập Excel",
                 Size = new Size(120, 35),
-                Location = new Point(140, 10)
+                Location = new Point(140, 10),
+                BackColor = Color.White
             };
             btnImport.Click += btnImportExcel_Click;
             bottomPanel.Controls.Add(btnImport);
 
+            // Gán sự kiện Load Form (QUAN TRỌNG: Tên hàm là LopMonForm_Load)
             this.Load += LopMonForm_Load;
         }
 
-        // ================== LOGIC TẢI DỮ LIỆU BAN ĐẦU ==================
+        // ================== LOGIC TẢI DỮ LIỆU ==================
 
+        // Hàm này chạy khi form bắt đầu hiện lên
         private void LopMonForm_Load(object sender, EventArgs e)
         {
             LoadLopData();
-            // Đã loại bỏ LoadMonHocData()
-            LoadFilteredStudents(); 
         }
 
         private void LoadLopData()
         {
             try
             {
-                var lopList = _lopBLL.GetAllLops().Cast<Lop>().ToList(); 
-                lopList.Insert(0, new Lop { MaLop = null, TenLop = "--- Tất cả Lớp ---" }); 
-                
+                // Lấy danh sách lớp từ CSDL
+                var lopList = _lopBLL.GetAllLops().Cast<Lop>().ToList();
+
                 cboLop.DataSource = lopList;
-                cboLop.DisplayMember = "TenLop"; 
-                cboLop.ValueMember = "MaLop"; 
-                
+                cboLop.DisplayMember = "TenLop";
+                cboLop.ValueMember = "MaLop";
+
+                // Mặc định chọn lớp đầu tiên nếu có
+                if (lopList.Count > 0)
+                {
+                    cboLop.SelectedIndex = 0;
+                }
             }
             catch (Exception ex)
             {
@@ -135,124 +146,93 @@ namespace StudentManagement.GUI
             }
         }
 
-        // Đã loại bỏ LoadMonHocData()
-        
-        // ================== LOGIC LỌC VÀ HIỂN THỊ DỮ LIỆU ==================
-
         private void LoadFilteredStudents()
         {
             try
             {
-                string selectedMaLop = cboLop.SelectedValue?.ToString(); 
-                // Đã loại bỏ selectedMaMon
+                if (cboLop.SelectedValue == null) return;
+                string selectedMaLop = cboLop.SelectedValue.ToString();
 
-                // SỬA: Chỉ truyền maLop
-                var filteredList = _hocPhanBLL.GetStudentsByLop(selectedMaLop);
-                
+                // Lấy sinh viên thuộc lớp đã chọn bằng SinhVienBLL
+                var filteredList = _sinhVienBLL.GetStudentsByClass(selectedMaLop);
+
                 dgv.DataSource = filteredList;
-                
                 CustomizeDataGridView();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi lọc sinh viên: " + ex.Message, "Lỗi"); 
-                dgv.DataSource = null;
+                MessageBox.Show("Lỗi khi lọc sinh viên: " + ex.Message, "Lỗi");
             }
         }
 
         private void CustomizeDataGridView()
         {
-            if (dgv.DataSource == null || dgv.Columns.Count == 0) return;
-            
-            const string GIOITINH_COL = "GioiTinh";
-            const string TENKHOA_COL = "TenKhoa";
+            if (dgv.DataSource == null) return;
 
-            // 1. SỬA CỘT GIOITINH TỪ CHECKBOX SANG TEXT
-            if (dgv.Columns.Contains(GIOITINH_COL) && dgv.Columns[GIOITINH_COL] is DataGridViewCheckBoxColumn)
-            {
-                var oldColumn = dgv.Columns[GIOITINH_COL];
-                int columnIndex = oldColumn.Index;
-                string dataPropertyName = oldColumn.DataPropertyName;
-                dgv.Columns.Remove(GIOITINH_COL);
+            // Ẩn cột Mã Lớp (vì đã hiển thị trên ComboBox rồi)
+            if (dgv.Columns.Contains("MaLop")) dgv.Columns["MaLop"].Visible = false;
 
-                var newColumn = new DataGridViewTextBoxColumn
-                {
-                    Name = GIOITINH_COL,
-                    HeaderText = "Giới Tính",
-                    DataPropertyName = dataPropertyName,
-                    ReadOnly = true,
-                    AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
-                };
-                dgv.Columns.Insert(columnIndex, newColumn);
-            }
-            
-            // 2. ẨN CỘT TenKhoa (vẫn cần ẩn vì nó không được SELECT từ DB nữa)
-            if (dgv.Columns.Contains(TENKHOA_COL)) 
-            {
-                dgv.Columns[TENKHOA_COL].Visible = false;
-            }
-            
-            // 3. Đặt tên Header cho các cột quan trọng
+            // Đặt tên cột tiếng Việt cho đẹp
             if (dgv.Columns.Contains("MaSV")) dgv.Columns["MaSV"].HeaderText = "Mã SV";
-            if (dgv.Columns.Contains("HoTen")) dgv.Columns["HoTen"].HeaderText = "Họ Tên";
-            if (dgv.Columns.Contains("MaLop")) dgv.Columns["MaLop"].HeaderText = "Mã Lớp";
+            if (dgv.Columns.Contains("HoTen")) dgv.Columns["HoTen"].HeaderText = "Họ và Tên";
+            if (dgv.Columns.Contains("NgaySinh")) dgv.Columns["NgaySinh"].HeaderText = "Ngày Sinh";
+            if (dgv.Columns.Contains("GioiTinh")) dgv.Columns["GioiTinh"].HeaderText = "Giới Tính";
+            if (dgv.Columns.Contains("TenKhoa")) dgv.Columns["TenKhoa"].HeaderText = "Khoa";
+            if (dgv.Columns.Contains("GPA")) dgv.Columns["GPA"].HeaderText = "Điểm TB";
+            if (dgv.Columns.Contains("TrangThai")) dgv.Columns["TrangThai"].HeaderText = "Trạng Thái";
+        }
+
+        // ================== XỬ LÝ SỰ KIỆN & ĐỊNH DẠNG ==================
+
+        private void cboLop_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadFilteredStudents();
         }
 
         private void dgv_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            // Xử lý cột GioiTinh (chuyển bool sang Nam/Nữ)
-            if (dgv.Columns.Contains("GioiTinh") && dgv.Columns[e.ColumnIndex].Name.Equals("GioiTinh", StringComparison.OrdinalIgnoreCase))
+            // 1. Giới tính: true -> Nam, false -> Nữ
+            if (dgv.Columns[e.ColumnIndex].Name == "GioiTinh" && e.Value is bool gender)
             {
-                if (e.Value is bool gioitinhValue)
-                {
-                    e.Value = gioitinhValue ? "Nam" : "Nữ";
-                    e.FormattingApplied = true;
-                }
+                e.Value = gender ? "Nam" : "Nữ";
+                e.FormattingApplied = true;
             }
-            
-            // Xử lý cột TrangThai (chuyển Enum sang chuỗi tiếng Việt)
-            if (dgv.Columns.Contains("TrangThai") && dgv.Columns[e.ColumnIndex].Name.Equals("TrangThai", StringComparison.OrdinalIgnoreCase))
+
+            // 2. Trạng thái: Enum -> Tiếng Việt
+            if (dgv.Columns[e.ColumnIndex].Name == "TrangThai" && e.Value is StudentStatus status)
             {
-                if (e.Value is StudentStatus statusValue)
+                switch (status)
                 {
-                    switch (statusValue)
-                    {
-                        case StudentStatus.NghiHoc: e.Value = "Nghỉ học"; break;
-                        case StudentStatus.DangHoc: e.Value = "Đang học"; break;
-                        case StudentStatus.BaoLuu: e.Value = "Bảo lưu"; break;
-                        case StudentStatus.TotNghiep: e.Value = "Đã tốt nghiệp"; break;
-                        default: e.Value = statusValue.ToString(); break;
-                    }
-                    e.FormattingApplied = true;
+                    case StudentStatus.NghiHoc: e.Value = "Nghỉ học"; break;
+                    case StudentStatus.DangHoc: e.Value = "Đang học"; break;
+                    case StudentStatus.BaoLuu: e.Value = "Bảo lưu"; break;
+                    case StudentStatus.TotNghiep: e.Value = "Đã tốt nghiệp"; break;
+                    default: e.Value = status.ToString(); break;
                 }
+                e.FormattingApplied = true;
+            }
+
+            // 3. GPA: Hiển thị 2 số lẻ (VD: 8.50)
+            if (dgv.Columns[e.ColumnIndex].Name == "GPA" && e.Value != null)
+            {
+                e.Value = string.Format("{0:N2}", e.Value);
+                e.FormattingApplied = true;
             }
         }
 
-        // ================== EVENT HANDLERS ==================
-
-        private void cboLop_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cboLop.SelectedValue != null) 
-            {
-                LoadFilteredStudents();
-            }
-        }
-
-        // Đã loại bỏ cboMon_SelectedIndexChanged()
-        
         private void dgv_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
-            e.ThrowException = false; 
+            e.ThrowException = false; // Bỏ qua lỗi hiển thị nếu có
         }
 
         private void btnExportExcel_Click(object sender, EventArgs e)
         {
-             MessageBox.Show("Chức năng Xuất Excel sẽ được triển khai tại đây.");
+            MessageBox.Show("Chức năng Xuất Excel sẽ được triển khai sau.");
         }
 
         private void btnImportExcel_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Chức năng Nhập Excel sẽ được triển khai tại đây.");
+            MessageBox.Show("Chức năng Nhập Excel sẽ được triển khai sau.");
         }
     }
 }
