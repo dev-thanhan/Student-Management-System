@@ -35,241 +35,282 @@ namespace StudentManagement.GUI
 
         private void InitializeComponent()
         {
-            this.lblMaSV = new System.Windows.Forms.Label();
-            this.txtMaSV = new System.Windows.Forms.TextBox();
-            this.lblHoTen = new System.Windows.Forms.Label();
-            this.txtHoTen = new System.Windows.Forms.TextBox();
-            this.lblNgaySinh = new System.Windows.Forms.Label();
-            this.dtpNgaySinh = new System.Windows.Forms.DateTimePicker();
-            this.lblGioiTinh = new System.Windows.Forms.Label();
-            this.cboGioiTinh = new System.Windows.Forms.ComboBox();
-            this.lblDiaChi = new System.Windows.Forms.Label();
-            this.txtDiaChi = new System.Windows.Forms.TextBox();
-            this.lblSDT = new System.Windows.Forms.Label();
-            this.txtSDT = new System.Windows.Forms.TextBox();
-            this.lblEmail = new System.Windows.Forms.Label();
-            this.txtEmail = new System.Windows.Forms.TextBox();
-            this.lblMaLop = new System.Windows.Forms.Label();
-            this.cboMaLop = new System.Windows.Forms.ComboBox();
-            this.lblTrangThai = new System.Windows.Forms.Label();
-            this.cboTrangThai = new System.Windows.Forms.ComboBox();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.SuspendLayout();
-            
+            lblMaSV = new Label();
+            txtMaSV = new TextBox();
+            lblHoTen = new Label();
+            txtHoTen = new TextBox();
+            lblNgaySinh = new Label();
+            dtpNgaySinh = new DateTimePicker();
+            lblGioiTinh = new Label();
+            cboGioiTinh = new ComboBox();
+            lblDiaChi = new Label();
+            txtDiaChi = new TextBox();
+            lblSDT = new Label();
+            txtSDT = new TextBox();
+            lblEmail = new Label();
+            txtEmail = new TextBox();
+            lblMaLop = new Label();
+            cboMaLop = new ComboBox();
+            lblTrangThai = new Label();
+            cboTrangThai = new ComboBox();
+            btnSave = new Button();
+            btnCancel = new Button();
+            txtTenKhoa = new TextBox();
+            txtGPA = new TextBox();
+            SuspendLayout();
+            // 
             // lblMaSV
-            this.lblMaSV.AutoSize = true;
-            this.lblMaSV.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblMaSV.Location = new System.Drawing.Point(12, 15);
-            this.lblMaSV.Name = "lblMaSV";
-            this.lblMaSV.Size = new System.Drawing.Size(59, 15);
-            this.lblMaSV.TabIndex = 0;
-            this.lblMaSV.Text = "";
-            
+            // 
+            lblMaSV.AutoSize = true;
+            lblMaSV.Font = new Font("Segoe UI", 9F);
+            lblMaSV.Location = new Point(14, 20);
+            lblMaSV.Name = "lblMaSV";
+            lblMaSV.Size = new Size(0, 20);
+            lblMaSV.TabIndex = 0;
+            // 
             // txtMaSV
-            this.txtMaSV.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtMaSV.Location = new System.Drawing.Point(120, 12);
-            this.txtMaSV.Name = "txtMaSV";
-            this.txtMaSV.Size = new System.Drawing.Size(200, 23);
-            this.txtMaSV.TabIndex = 1;
-            
+            // 
+            txtMaSV.Font = new Font("Segoe UI", 9F);
+            txtMaSV.Location = new Point(137, 16);
+            txtMaSV.Margin = new Padding(3, 4, 3, 4);
+            txtMaSV.Name = "txtMaSV";
+            txtMaSV.Size = new Size(228, 27);
+            txtMaSV.TabIndex = 1;
+            // 
             // lblHoTen
-            this.lblHoTen.AutoSize = true;
-            this.lblHoTen.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblHoTen.Location = new System.Drawing.Point(12, 44);
-            this.lblHoTen.Name = "lblHoTen";
-            this.lblHoTen.Size = new System.Drawing.Size(56, 15);
-            this.lblHoTen.TabIndex = 2;
-            this.lblHoTen.Text = "";
-            
+            // 
+            lblHoTen.AutoSize = true;
+            lblHoTen.Font = new Font("Segoe UI", 9F);
+            lblHoTen.Location = new Point(14, 59);
+            lblHoTen.Name = "lblHoTen";
+            lblHoTen.Size = new Size(0, 20);
+            lblHoTen.TabIndex = 2;
+            // 
             // txtHoTen
-            this.txtHoTen.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtHoTen.Location = new System.Drawing.Point(120, 41);
-            this.txtHoTen.Name = "txtHoTen";
-            this.txtHoTen.Size = new System.Drawing.Size(200, 23);
-            this.txtHoTen.TabIndex = 3;
-            
+            // 
+            txtHoTen.Font = new Font("Segoe UI", 9F);
+            txtHoTen.Location = new Point(137, 55);
+            txtHoTen.Margin = new Padding(3, 4, 3, 4);
+            txtHoTen.Name = "txtHoTen";
+            txtHoTen.Size = new Size(228, 27);
+            txtHoTen.TabIndex = 3;
+            // 
             // lblNgaySinh
-            this.lblNgaySinh.AutoSize = true;
-            this.lblNgaySinh.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblNgaySinh.Location = new System.Drawing.Point(12, 73);
-            this.lblNgaySinh.Name = "lblNgaySinh";
-            this.lblNgaySinh.Size = new System.Drawing.Size(76, 15);
-            this.lblNgaySinh.TabIndex = 4;
-            this.lblNgaySinh.Text = "";
-            
+            // 
+            lblNgaySinh.AutoSize = true;
+            lblNgaySinh.Font = new Font("Segoe UI", 9F);
+            lblNgaySinh.Location = new Point(14, 97);
+            lblNgaySinh.Name = "lblNgaySinh";
+            lblNgaySinh.Size = new Size(0, 20);
+            lblNgaySinh.TabIndex = 4;
+            // 
             // dtpNgaySinh
-            this.dtpNgaySinh.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.dtpNgaySinh.Location = new System.Drawing.Point(120, 70);
-            this.dtpNgaySinh.Name = "dtpNgaySinh";
-            this.dtpNgaySinh.Size = new System.Drawing.Size(200, 23);
-            this.dtpNgaySinh.TabIndex = 5;
-            
+            // 
+            dtpNgaySinh.Font = new Font("Segoe UI", 9F);
+            dtpNgaySinh.Location = new Point(137, 93);
+            dtpNgaySinh.Margin = new Padding(3, 4, 3, 4);
+            dtpNgaySinh.Name = "dtpNgaySinh";
+            dtpNgaySinh.Size = new Size(228, 27);
+            dtpNgaySinh.TabIndex = 5;
+            dtpNgaySinh.ValueChanged += dtpNgaySinh_ValueChanged;
+            // 
             // lblGioiTinh
-            this.lblGioiTinh.AutoSize = true;
-            this.lblGioiTinh.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblGioiTinh.Location = new System.Drawing.Point(12, 102);
-            this.lblGioiTinh.Name = "lblGioiTinh";
-            this.lblGioiTinh.Size = new System.Drawing.Size(64, 15);
-            this.lblGioiTinh.TabIndex = 6;
-            this.lblGioiTinh.Text = "";
-            
+            // 
+            lblGioiTinh.AutoSize = true;
+            lblGioiTinh.Font = new Font("Segoe UI", 9F);
+            lblGioiTinh.Location = new Point(14, 136);
+            lblGioiTinh.Name = "lblGioiTinh";
+            lblGioiTinh.Size = new Size(0, 20);
+            lblGioiTinh.TabIndex = 6;
+            // 
             // cboGioiTinh
-            this.cboGioiTinh.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboGioiTinh.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.cboGioiTinh.FormattingEnabled = true;
-            this.cboGioiTinh.Items.AddRange(new object[] {
-            "Nam",
-            "Nữ"});
-            this.cboGioiTinh.Location = new System.Drawing.Point(120, 102);
-            this.cboGioiTinh.Name = "cboGioiTinh";
-            this.cboGioiTinh.Size = new System.Drawing.Size(200, 23);
-            this.cboGioiTinh.TabIndex = 7;
-            this.cboGioiTinh.SelectedIndex = 0;
-            
+            // 
+            cboGioiTinh.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboGioiTinh.Font = new Font("Segoe UI", 9F);
+            cboGioiTinh.FormattingEnabled = true;
+            cboGioiTinh.Items.AddRange(new object[] { "Nam", "Nữ" });
+            cboGioiTinh.Location = new Point(137, 136);
+            cboGioiTinh.Margin = new Padding(3, 4, 3, 4);
+            cboGioiTinh.Name = "cboGioiTinh";
+            cboGioiTinh.Size = new Size(228, 28);
+            cboGioiTinh.TabIndex = 7;
+            // 
             // lblDiaChi
-            this.lblDiaChi.AutoSize = true;
-            this.lblDiaChi.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblDiaChi.Location = new System.Drawing.Point(12, 127);
-            this.lblDiaChi.Name = "lblDiaChi";
-            this.lblDiaChi.Size = new System.Drawing.Size(63, 15);
-            this.lblDiaChi.TabIndex = 8;
-            this.lblDiaChi.Text = "";
-            
+            // 
+            lblDiaChi.AutoSize = true;
+            lblDiaChi.Font = new Font("Segoe UI", 9F);
+            lblDiaChi.Location = new Point(14, 169);
+            lblDiaChi.Name = "lblDiaChi";
+            lblDiaChi.Size = new Size(0, 20);
+            lblDiaChi.TabIndex = 8;
+            // 
             // txtDiaChi
-            this.txtDiaChi.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtDiaChi.Location = new System.Drawing.Point(120, 124);
-            this.txtDiaChi.Name = "txtDiaChi";
-            this.txtDiaChi.Size = new System.Drawing.Size(200, 23);
-            this.txtDiaChi.TabIndex = 9;
-            
+            // 
+            txtDiaChi.Font = new Font("Segoe UI", 9F);
+            txtDiaChi.Location = new Point(137, 165);
+            txtDiaChi.Margin = new Padding(3, 4, 3, 4);
+            txtDiaChi.Name = "txtDiaChi";
+            txtDiaChi.Size = new Size(228, 27);
+            txtDiaChi.TabIndex = 9;
+            txtDiaChi.TextChanged += txtDiaChi_TextChanged;
+            // 
             // lblSDT
-            this.lblSDT.AutoSize = true;
-            this.lblSDT.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblSDT.Location = new System.Drawing.Point(12, 156);
-            this.lblSDT.Name = "lblSDT";
-            this.lblSDT.Size = new System.Drawing.Size(86, 15);
-            this.lblSDT.TabIndex = 10;
-            this.lblSDT.Text = "";
-            
+            // 
+            lblSDT.AutoSize = true;
+            lblSDT.Font = new Font("Segoe UI", 9F);
+            lblSDT.Location = new Point(14, 208);
+            lblSDT.Name = "lblSDT";
+            lblSDT.Size = new Size(0, 20);
+            lblSDT.TabIndex = 10;
+            // 
             // txtSDT
-            this.txtSDT.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtSDT.Location = new System.Drawing.Point(120, 153);
-            this.txtSDT.Name = "txtSDT";
-            this.txtSDT.Size = new System.Drawing.Size(200, 23);
-            this.txtSDT.TabIndex = 11;
-            
+            // 
+            txtSDT.Font = new Font("Segoe UI", 9F);
+            txtSDT.Location = new Point(137, 208);
+            txtSDT.Margin = new Padding(3, 4, 3, 4);
+            txtSDT.Name = "txtSDT";
+            txtSDT.Size = new Size(228, 27);
+            txtSDT.TabIndex = 11;
+            // 
             // lblEmail
-            this.lblEmail.AutoSize = true;
-            this.lblEmail.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblEmail.Location = new System.Drawing.Point(12, 185);
-            this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(53, 15);
-            this.lblEmail.TabIndex = 12;
-            this.lblEmail.Text = "Email:";
-            
+            // 
+            lblEmail.AutoSize = true;
+            lblEmail.Font = new Font("Segoe UI", 9F);
+            lblEmail.Location = new Point(14, 247);
+            lblEmail.Name = "lblEmail";
+            lblEmail.Size = new Size(49, 20);
+            lblEmail.TabIndex = 12;
+            lblEmail.Text = "Email:";
+            // 
             // txtEmail
-            this.txtEmail.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtEmail.Location = new System.Drawing.Point(120, 182);
-            this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(200, 23);
-            this.txtEmail.TabIndex = 13;
-            
+            // 
+            txtEmail.Font = new Font("Segoe UI", 9F);
+            txtEmail.Location = new Point(137, 243);
+            txtEmail.Margin = new Padding(3, 4, 3, 4);
+            txtEmail.Name = "txtEmail";
+            txtEmail.Size = new Size(228, 27);
+            txtEmail.TabIndex = 13;
+            // 
             // lblMaLop
-            this.lblMaLop.AutoSize = true;
-            this.lblMaLop.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblMaLop.Location = new System.Drawing.Point(12, 214);
-            this.lblMaLop.Name = "lblMaLop";
-            this.lblMaLop.Size = new System.Drawing.Size(57, 15);
-            this.lblMaLop.TabIndex = 14;
-            this.lblMaLop.Text = "";
-            
+            // 
+            lblMaLop.AutoSize = true;
+            lblMaLop.Font = new Font("Segoe UI", 9F);
+            lblMaLop.Location = new Point(14, 285);
+            lblMaLop.Name = "lblMaLop";
+            lblMaLop.Size = new Size(0, 20);
+            lblMaLop.TabIndex = 14;
+            // 
             // cboMaLop
-            this.cboMaLop.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboMaLop.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.cboMaLop.FormattingEnabled = true;
-            this.cboMaLop.Location = new System.Drawing.Point(120, 211);
-            this.cboMaLop.Name = "cboMaLop";
-            this.cboMaLop.Size = new System.Drawing.Size(200, 23);
-            this.cboMaLop.TabIndex = 15;
-            
+            // 
+            cboMaLop.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboMaLop.Font = new Font("Segoe UI", 9F);
+            cboMaLop.FormattingEnabled = true;
+            cboMaLop.Location = new Point(137, 281);
+            cboMaLop.Margin = new Padding(3, 4, 3, 4);
+            cboMaLop.Name = "cboMaLop";
+            cboMaLop.Size = new Size(228, 28);
+            cboMaLop.TabIndex = 15;
+            // 
             // lblTrangThai
-            this.lblTrangThai.AutoSize = true;
-            this.lblTrangThai.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblTrangThai.Location = new System.Drawing.Point(12, 243);
-            this.lblTrangThai.Name = "lblTrangThai";
-            this.lblTrangThai.Size = new System.Drawing.Size(74, 15);
-            this.lblTrangThai.TabIndex = 16;
-            this.lblTrangThai.Text = "";
-            
+            // 
+            lblTrangThai.AutoSize = true;
+            lblTrangThai.Font = new Font("Segoe UI", 9F);
+            lblTrangThai.Location = new Point(14, 324);
+            lblTrangThai.Name = "lblTrangThai";
+            lblTrangThai.Size = new Size(0, 20);
+            lblTrangThai.TabIndex = 16;
+            // 
             // cboTrangThai
-            this.cboTrangThai.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboTrangThai.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.cboTrangThai.FormattingEnabled = true;
-            this.cboTrangThai.Items.AddRange(new object[] {
-            "NghiHoc",
-            "DangHoc",
-            "BaoLuu",
-            "TotNghiep"});
-            this.cboTrangThai.Location = new System.Drawing.Point(120, 240);
-            this.cboTrangThai.Name = "cboTrangThai";
-            this.cboTrangThai.Size = new System.Drawing.Size(200, 23);
-            this.cboTrangThai.TabIndex = 17;
-            this.cboTrangThai.SelectedIndex = 1;
-            
+            // 
+            cboTrangThai.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboTrangThai.Font = new Font("Segoe UI", 9F);
+            cboTrangThai.FormattingEnabled = true;
+            cboTrangThai.Items.AddRange(new object[] { "NghiHoc", "DangHoc", "BaoLuu", "TotNghiep" });
+            cboTrangThai.Location = new Point(137, 425);
+            cboTrangThai.Margin = new Padding(3, 4, 3, 4);
+            cboTrangThai.Name = "cboTrangThai";
+            cboTrangThai.Size = new Size(228, 28);
+            cboTrangThai.TabIndex = 17;
+            // 
             // btnSave
-            this.btnSave.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnSave.Location = new System.Drawing.Point(120, 280);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 30);
-            this.btnSave.TabIndex = 18;
-            this.btnSave.Text = "";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            
+            // 
+            btnSave.Font = new Font("Segoe UI", 9F);
+            btnSave.Location = new Point(137, 489);
+            btnSave.Margin = new Padding(3, 4, 3, 4);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(86, 40);
+            btnSave.TabIndex = 18;
+            btnSave.UseVisualStyleBackColor = true;
+            btnSave.Click += btnSave_Click;
+            // 
             // btnCancel
-            this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnCancel.Location = new System.Drawing.Point(245, 280);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 30);
-            this.btnCancel.TabIndex = 19;
-            this.btnCancel.Text = "";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            
+            // 
+            btnCancel.Font = new Font("Segoe UI", 9F);
+            btnCancel.Location = new Point(279, 489);
+            btnCancel.Margin = new Padding(3, 4, 3, 4);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(86, 40);
+            btnCancel.TabIndex = 19;
+            btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.Click += btnCancel_Click;
+            // 
+            // txtTenKhoa
+            // 
+            txtTenKhoa.Font = new Font("Segoe UI", 9F);
+            txtTenKhoa.Location = new Point(137, 324);
+            txtTenKhoa.Margin = new Padding(3, 4, 3, 4);
+            txtTenKhoa.Name = "txtTenKhoa";
+            txtTenKhoa.Size = new Size(228, 27);
+            txtTenKhoa.TabIndex = 20;
+            // 
+            // txtGPA
+            // 
+            txtGPA.Font = new Font("Segoe UI", 9F);
+            txtGPA.Location = new Point(137, 375);
+            txtGPA.Margin = new Padding(3, 4, 3, 4);
+            txtGPA.Name = "txtGPA";
+            txtGPA.Size = new Size(228, 27);
+            txtGPA.TabIndex = 21;
+            // 
             // SinhVienEditForm
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(450, 350);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.lblTrangThai);
-            this.Controls.Add(this.cboTrangThai);
-            this.Controls.Add(this.lblMaLop);
-            this.Controls.Add(this.cboMaLop);
-            this.Controls.Add(this.lblEmail);
-            this.Controls.Add(this.txtEmail);
-            this.Controls.Add(this.lblSDT);
-            this.Controls.Add(this.txtSDT);
-            this.Controls.Add(this.lblDiaChi);
-            this.Controls.Add(this.txtDiaChi);
-            this.Controls.Add(this.lblGioiTinh);
-            this.Controls.Add(this.cboGioiTinh);
-            this.Controls.Add(this.lblNgaySinh);
-            this.Controls.Add(this.dtpNgaySinh);
-            this.Controls.Add(this.lblHoTen);
-            this.Controls.Add(this.txtHoTen);
-            this.Controls.Add(this.lblMaSV);
-            this.Controls.Add(this.txtMaSV);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "SinhVienEditForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "";
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(544, 560);
+            Controls.Add(txtGPA);
+            Controls.Add(txtTenKhoa);
+            Controls.Add(btnCancel);
+            Controls.Add(btnSave);
+            Controls.Add(lblTrangThai);
+            Controls.Add(cboTrangThai);
+            Controls.Add(lblMaLop);
+            Controls.Add(cboMaLop);
+            Controls.Add(lblEmail);
+            Controls.Add(txtEmail);
+            Controls.Add(lblSDT);
+            Controls.Add(txtSDT);
+            Controls.Add(lblDiaChi);
+            Controls.Add(txtDiaChi);
+            Controls.Add(lblGioiTinh);
+            Controls.Add(cboGioiTinh);
+            Controls.Add(lblNgaySinh);
+            Controls.Add(dtpNgaySinh);
+            Controls.Add(lblHoTen);
+            Controls.Add(txtHoTen);
+            Controls.Add(lblMaSV);
+            Controls.Add(txtMaSV);
+            Font = new Font("Segoe UI", 9F);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            Margin = new Padding(3, 4, 3, 4);
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "SinhVienEditForm";
+            StartPosition = FormStartPosition.CenterParent;
+            ResumeLayout(false);
+            PerformLayout();
         }
+
+        private TextBox txtTenKhoa;
+        private TextBox txtGPA;
     }
 }
