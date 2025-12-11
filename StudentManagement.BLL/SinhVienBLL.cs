@@ -1,41 +1,24 @@
-﻿using StudentManagement.DAL.Implementations;
+﻿using System.Collections.Generic;
+using StudentManagement.DAL.Implementations;
 using StudentManagement.DTO;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace StudentManagement.BLL
 {
     public class SinhVienBLL
     {
-        private readonly StudentManagement.DAL.Implementations.SinhVienDAL _dal = new StudentManagement.DAL.Implementations.SinhVienDAL();
+        private readonly SinhVienDAL _dal = new SinhVienDAL();
 
-        public List<SinhVien> GetAllStudents()
-        {
-            return _dal.GetAll();
-        }
+        /// <summary>
+        /// Sửa lỗi nếu tên hàm không khớp. Lấy tất cả sinh viên.
+        /// </summary>
+        public List<SinhVien> GetAllStudents() => _dal.GetAll();
 
-        public List<SinhVien> Search(string keyword)
-        {
-            return _dal.Search(keyword);
-        }
-
-        public SinhVien GetById(string maSV)
-        {
-            return _dal.GetById(maSV);
-        }
-
-        public bool Insert(SinhVien sv)
-        {
-            return _dal.Insert(sv);
-        }
-
-        public bool Update(SinhVien sv)
-        {
-            return _dal.Update(sv);
-        }
-
-        public bool Delete(string maSV)
-        {
-            return _dal.Delete(maSV);
-        }
+        // Giữ nguyên các hàm cũ của bạn (nếu có)
+        public SinhVien GetById(string maSV) => _dal.GetById(maSV);
+        public List<SinhVien> Search(string keyword) => _dal.Search(keyword);
+        public bool Insert(SinhVien sv) => _dal.Insert(sv);
+        public bool Update(SinhVien sv) => _dal.Update(sv);
+        public bool Delete(string maSV) => _dal.Delete(maSV);
     }
 }
