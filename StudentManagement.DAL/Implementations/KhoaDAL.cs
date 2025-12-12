@@ -108,7 +108,6 @@ namespace StudentManagement.DAL.Implementations
         {
             using (MySqlConnection conn = DbHelper.GetConnection())
             {
-                // Kiểm tra trong bảng Nganh
                 string sql = "SELECT COUNT(*) FROM Nganh WHERE MaKhoa = @Id";
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@Id", maKhoa);

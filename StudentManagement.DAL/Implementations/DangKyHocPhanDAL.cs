@@ -7,7 +7,6 @@ namespace StudentManagement.DAL.Implementations
 {
     public class DangKyHocPhanDAL
     {
-        // Đăng ký mới môn học
         public bool Register(DangKyHocPhan dk)
         {
             using (var conn = DbHelper.GetConnection())
@@ -19,13 +18,12 @@ namespace StudentManagement.DAL.Implementations
                     cmd.Parameters.AddWithValue("@MaSV", dk.MaSV);
                     cmd.Parameters.AddWithValue("@MaLopHP", dk.MaLopHP);
                     cmd.Parameters.AddWithValue("@NgayDK", dk.NgayDangKy);
-                    cmd.Parameters.AddWithValue("@TrangThai", dk.TrangThai); // Enum tự convert sang int/byte
+                    cmd.Parameters.AddWithValue("@TrangThai", dk.TrangThai); 
                     return cmd.ExecuteNonQuery() > 0;
                 }
             }
         }
 
-        // Hủy đăng ký (Xóa)
         public bool CancelRegistration(string maSV, string maLopHP)
         {
             using (var conn = DbHelper.GetConnection())
@@ -41,7 +39,6 @@ namespace StudentManagement.DAL.Implementations
             }
         }
 
-        // Lấy danh sách lớp học phần đã đăng ký của 1 sinh viên
         public List<DangKyHocPhan> GetByStudent(string maSV)
         {
             var list = new List<DangKyHocPhan>();

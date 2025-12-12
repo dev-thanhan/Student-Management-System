@@ -55,7 +55,6 @@ namespace StudentManagement.DAL.Implementations
             using (var conn = DbHelper.GetConnection())
             {
                 conn.Open();
-                // Tạo Transaction: Nếu lưu 10 sv mà lỗi 1 người thì rollback hết
                 using (var transaction = conn.BeginTransaction())
                 {
                     try

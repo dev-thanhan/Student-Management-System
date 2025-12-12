@@ -11,8 +11,8 @@
         public string Email { get; set; } = "";
         public string MaLop { get; set; } = "";
 
-        public string TenKhoa { get; set; } = ""; // Để hiển thị tên khoa
-        public decimal GPA { get; set; } = 0;     // Để hiển thị điểm trung bình
+        public string TenKhoa { get; set; } = ""; 
+        public decimal GPA { get; set; } = 0;
 
         public StudentStatus TrangThai { get; set; } = StudentStatus.DangHoc;
     }
@@ -20,7 +20,7 @@
     public enum StudentStatus : byte
     {
         NghiHoc = 0,
-        DangHoc = 1, // Default trong SQL là 1
+        DangHoc = 1,
         BaoLuu = 2,
         TotNghiep = 3
     }

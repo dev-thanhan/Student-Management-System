@@ -7,7 +7,7 @@ namespace StudentManagement.DAL
     {
         public static MySqlConnection GetConnection()
         {
-            // Ví dụ: Server=localhost;Database=StudentManagement;Uid=root;Pwd=...;
+            //Server=localhost;Database=StudentManagement;Uid=root;Pwd=...;
             string connStr = ConfigurationManager.ConnectionStrings["StudentDb"].ConnectionString;
             return new MySqlConnection(connStr);
         }

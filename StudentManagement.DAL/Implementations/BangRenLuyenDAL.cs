@@ -26,7 +26,6 @@ namespace StudentManagement.DAL.Implementations
             return list;
         }
 
-        // Lấy điểm rèn luyện của 1 sinh viên cụ thể
         public List<BangRenLuyen> GetByStudent(string maSV)
         {
             var list = new List<BangRenLuyen>();
@@ -54,7 +53,6 @@ namespace StudentManagement.DAL.Implementations
             using (var conn = DbHelper.GetConnection())
             {
                 conn.Open();
-                // Không insert IdRenLuyen vì là Auto Increment
                 string sql = @"INSERT INTO BangRenLuyen(MaSV, MaHocKy, DiemSo, XepLoai, NhanXet, NgayDanhGia) 
                                VALUES(@MaSV, @MaHK, @Score, @Rank, @Comment, @Date)";
 
@@ -71,7 +69,6 @@ namespace StudentManagement.DAL.Implementations
             using (var conn = DbHelper.GetConnection())
             {
                 conn.Open();
-                // Cập nhật dựa trên IdRenLuyen
                 string sql = @"UPDATE BangRenLuyen 
                                SET MaSV = @MaSV, 
                                    MaHocKy = @MaHK, 
@@ -83,7 +80,6 @@ namespace StudentManagement.DAL.Implementations
 
                 using (var cmd = new MySqlCommand(sql, conn))
                 {
-                    // Thêm tham số ID riêng vì hàm AddParams không bao gồm ID cho insert
                     cmd.Parameters.AddWithValue("@Id", obj.IdRenLuyen);
                     AddParams(cmd, obj);
                     return cmd.ExecuteNonQuery() > 0;
@@ -113,7 +109,7 @@ namespace StudentManagement.DAL.Implementations
                 IdRenLuyen = Convert.ToInt32(reader["IdRenLuyen"]),
                 MaSV = reader["MaSV"].ToString(),
                 MaHocKy = reader["MaHocKy"].ToString(),
-                DiemSo = Convert.ToInt32(reader["DiemSo"]), // TINYINT trong MySQL map sang int/byte
+                DiemSo = Convert.ToInt32(reader["DiemSo"]),
                 XepLoai = reader["XepLoai"].ToString(),
                 NhanXet = reader["NhanXet"].ToString(),
                 NgayDanhGia = reader["NgayDanhGia"] != DBNull.Value ? Convert.ToDateTime(reader["NgayDanhGia"]) : DateTime.MinValue
